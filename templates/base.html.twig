@@ -14,7 +14,7 @@
     <body>
         {% block body %}{% endblock %}
     </body>
-    <script>
+    {# <script>
         var conn = new WebSocket('ws://127.0.0.1:8080');
         conn.onopen = function(e) {
             console.log("Connection established!");
@@ -27,6 +27,23 @@
         function sendMessage(message) {
             conn.send(message);
         };
+    </script> #}
+    <script>
+        var socket = new WebSocket('ws://127.0.0.1:8080');
+
+        socket.onopen = function() {
+            console.log('WebSocket connection opened');
+            socket.send('Hello Server');
+        };
+
+        socket.onmessage = function(event) {
+            console.log('Message from server ', event.data);
+        };
+
+        socket.onclose = function() {
+            console.log('WebSocket connection closed');
+        };
+
     </script>
 
 </html>
