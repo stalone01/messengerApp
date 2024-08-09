@@ -9,12 +9,20 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Conversation...</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/home/stalone/Bureau/techLab/messenger_app/src/Controller/ChatController.php</code></li>
-        <li>Your template at <code>/home/stalone/Bureau/techLab/messenger_app/templates/chat/index.html.twig</code></li>
-    </ul>
+    <div class="chat-container">
+        <div class="chat-box" id="chatBox">
+            <div class="message received">
+                <p>Bonjour! Comment puis-je vous aider?</p>
+            </div>
+        </div>
+
+        <form id="messageForm">
+            <input type="text" id="messageInput" placeholder="Écrivez votre message..." required>
+            <button type="submit">Envoyer</button>
+        </form>
+    </div>
+ 
 </div>
 {% endblock %}
