@@ -13,6 +13,9 @@ Encore
     //.setManifestKeyPrefix('build/')
 
     .addEntry('app', './assets/app.js')
+    // .addEntry('app', './assets/app.js')
+    // .addEntry('app', './assets/app.js')
+    // .addEntry('app', './assets/app.js')
     .enableVueLoader()
     .enableSingleRuntimeChunk()
     .copyFiles({
