@@ -1,40 +1,64 @@
 <template>
-  <div class="chat-container">
-    <div class="messages">
-      <Message v-for="msg in messages" :key="msg.id" :message="msg" />
+    <div class="chat-container">
+      <UserList :users="users" :currentUserId="userId" />
+      <div class="chat-container">
+        <div class="messages">
+          <Message v-for="(msg, index) in messages" :key="index" :message="msg" :currentUserId="userId"/>
+        </div>
+        <div class="input-container">
+          <InputMessage @send-message="handlSendMessage" />
+        </div>
+      </div>
     </div>
-    <div class="input-container">
-      <input v-model="newMessage" @keyup.enter="sendMessage" placeholder="Type a message..." />
-      <button @click="sendMessage">Send</button>
-    </div>
-  </div>
+
 </template>
 
 <script>
+import InputMessage from './InputMessage.vue';
 import Message from './Message.vue';
+import UserList from './UserList.vue';
 
 export default {
+  name: 'App',
   components: {
     Message,
+    InputMessage,
+    UserList,
   },
   data() {
     return {
       socket: null,
       messages: [],
-      newMessage: '',
+      users: [],
+      userId: 1, //user Id, this should be dynamically set
     };
   },
   created() {
-    this.socket = new WebSocket('ws://localhost:9502'); // URL de votre serveur WebSocket
+    this.socket = new WebSocket('ws://localhost:8080'); // URL de votre serveur WebSocket
+
+    // Gestion de message
     this.socket.onmessage = (event) => {
       const message = JSON.parse(event.data);
-      this.messages.push(message);
+      if(data.type === 'message'){
+        this.messages.push(message);
+      }else if(data.type === 'user_list'){
+        this.users = data.users;
+      }
     };
   },
   methods: {
-    sendMessage() {
+    // handlSendMessage(messageText){
+    //   const message = {
+    //     user_id: this.userId,
+    //     message: messageText,
+    //     timestamp: new Date().toISOString(),
+    //   };
+    //   this.socket.send(JSON.stringify({ type: 'message',data: message }));
+    //   this.message.push(message);
+    // },
+    handleSendMessage() {
       if (this.newMessage.trim()) {
-        const message = { text: this.newMessage, timestamp: new Date().toISOString() };
+        const message = { user_id:this.userId, text: this.newMessage, timestamp: new Date().toISOString() };
         this.socket.send(JSON.stringify(message));
         this.newMessage = '';
       }
@@ -47,48 +71,28 @@ export default {
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  max-width: 600px;
+  height: 90vh;
+  max-width: 900px;
   margin: 0 auto;
   border: 1px solid #ccc;
   border-radius: 8px;
-  overflow: scroll;
+  overflow: hidden;
+}
+
+.chat-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .messages {
   flex: 1;
-  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 10px;
   overflow-y: auto;
   background-color: #f9f9f9;
 }
 
-.input-container {
-  display: flex;
-  padding: 16px;
-  border-top: 1px solid #ddd;
-  background-color: #fff;
-  
-}
-
-input {
-  flex: 1;
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  margin-right: 8px;
-}
-
-button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
 </style>

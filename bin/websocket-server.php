@@ -12,7 +12,7 @@ $server = IoServer::factory(
         new WsServer(
             new ChatHandler()
         )
-        ),
+    ),
     8080
 );
 
