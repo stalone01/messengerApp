@@ -6,7 +6,12 @@
 
 <div id="app">
     <user-list :users="{{ users|json_encode|raw }}"></user-list>
-    <div id="user-list" :users="{{ users|json_encode|raw }}"></div>
 </div>
+<div>
+    {% for user in users %}
+        <li>{{ user.username|e }}</li>
+    {% endfor %}
+</div>
+
 
 {% endblock %}
