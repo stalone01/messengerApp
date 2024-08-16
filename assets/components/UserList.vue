@@ -4,7 +4,7 @@
       <ul>
         <li v-for="user in users" :key="user.id">
           <span :class="{ 'current-user': user.id === currentUserId }">
-            {{ user.name }}
+            {{ user.username }}
           </span>
         </li>
       </ul>

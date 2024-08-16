@@ -22,7 +22,7 @@ class ChatHandler implements MessageComponentInterface
         $this->clients->attach($conn);
         
         //ajout d 'utilisateur à la liste
-        $userId =$conn->ressourceId;
+        $userId =$conn->resourceId;
         $this->users[$userId]=['id'=>$userId, 'name'=>"user $userId"];
 
         //Envoi d'utilisateur à la liste
@@ -67,16 +67,3 @@ class ChatHandler implements MessageComponentInterface
         $conn->close();
     }
 }
-
-use Ratchet\Server\IoServer;
-use Ratchet\Http\HttpServer;
-use Ratchet\WebSocket\WsServer;
-
-$server = IoServer::factory(
-    new HttpServer(
-        new WsServer(new ChatHandler())
-    ),
-    8080
-);
-
-$server->run();

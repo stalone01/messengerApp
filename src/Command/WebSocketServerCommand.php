@@ -21,13 +21,21 @@ class WebSocketServerCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output) {
         $loop = LoopFactory::create();
-        $webSocket = new WsServer(new ChatHandler());
-        $http = new HttpServer($webSocket);
-        $server = new IoServer($http, new ReactServer('127.0.0.1:8080', $loop), $loop);
-
-        $output->writeln('WebSocket server started on ws://127.0.0.1:8080');
-        $loop->run();
-
+    
+        try {
+            $webSocket = new WsServer(new ChatHandler());
+            $http = new HttpServer($webSocket);
+            $server = new IoServer($http, new ReactServer('127.0.0.1:8080', $loop), $loop);
+    
+            $output->writeln('WebSocket server started on ws://127.0.0.1:8080');
+            $loop->run();
+    
+        } catch (\Exception $e) {
+            $output->writeln('Error: ' . $e->getMessage());
+            return Command::FAILURE;
+        }
+    
         return Command::SUCCESS;
     }
+    
 }
