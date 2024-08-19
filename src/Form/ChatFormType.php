@@ -16,14 +16,16 @@ class ChatFormType extends AbstractType
             ->add('username')
             ->add('content')
             ->add('createdAt')
+            ->add('userExp')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Message::class,
-            'data_class' => User::class
+            'data_message' => Message::class,
+            'data_user' => User::class
         ]);
     }
+    
 }
