@@ -1,4 +1,5 @@
 <template>
+    <Navbar/>
     <div class="chat-container">
       <UserList :users="users" :currentUserId="userId" />
       <div class="chat-container">
@@ -17,6 +18,7 @@
 import InputMessage from './InputMessage.vue';
 import Message from './Message.vue';
 import UserList from './UserList.vue';
+import Navbar from './partiels/Navbar.vue';
 
 export default {
   name: 'App',
@@ -24,6 +26,7 @@ export default {
     Message,
     InputMessage,
     UserList,
+    Navbar,
   },
   data() {
     return {
