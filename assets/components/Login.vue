@@ -1,77 +1,128 @@
 <template>
-       <div id="app" class="bg-background min-h-screen flex items-center justify-center">
-        <form class="bg-card p-8 rounded-lg shadow-lg w-full max-w-md">
-            <h2 class="text-2xl font-bold text-primary text-center mb-6">Login</h2>
-            <div class="mb-4">
-                <label for="username" class="block text-sm font-medium text-primary">Username</label>
-                <input id="username" type="text" class="w-full mt-1 px-3 py-2 rounded-lg bg-input text-primary ring ring-primary focus:ring focus:ring-primary focus:outline-none" placeholder="Enter your username" />
-            </div>
-            <div class="mb-6">
-                <label for="password" class="block text-sm font-medium text-primary">Password</label>
-                <input id="password" type="password" class="w-full mt-1 px-3 py-2 rounded-lg bg-input text-primary ring ring-primary focus:ring focus:ring-primary focus:outline-none" placeholder="Enter your password" />
-            </div>
-            <button type="submit" id="loginBtn" class="w-full bg-primary text-primary-foreground py-2 rounded-lg hover:bg-primary/80 transition-colors duration-300">Login</button>
-        </form>
-    </div>
+ <div class="login-container">
+    <h1>Connexion</h1>
+    <form @submit.prevent="login" class="login-form">
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur</label>
+        <input 
+          type="text" 
+          id="username" 
+          v-model="username" 
+          placeholder="Entrez votre nom d'utilisateur" 
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input 
+          type="password" 
+          id="password" 
+          v-model="password" 
+          placeholder="Entrez votre mot de passe" 
+          required
+        />
+      </div>
+      <button type="submit" class="submit-button">Se connecter</button>
+    </form>
+  </div>
 </template>
-<script>
-export default{
-    name: 'Login',
-    components:{
-
+  
+  <script>
+  export default {
+    data() {
+      return {
+        username: '',
+        password: ''
+      }
+    },
+    methods: {
+      async login() {
+        // Envoyer une requête POST à Symfony pour authentifier l'utilisateur
+        try {
+          const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              username: this.username,
+              password: this.password
+            })
+          });
+          
+          if (response.ok) {
+            this.$router.push('/chat');
+          } else {
+            alert('Login failed!');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      }
     }
-}
-</script>
-<style>
-    body {
-        --background: #f7fafc;
-        --foreground: #1a202c;
-        --primary: #3182ce;
-        --border: #e2e8f0;
-        --input: #edf2f7;
-        --ring: #63b3ed;
-        --primary-foreground: #ffffff;
-    }
-    body.dark {
-        --background: #1a202c;
-        --foreground: #cbd5e0;
-        --primary: #63b3ed;
-        --border: #2d3748;
-        --input: #4a5568;
-        --ring: #3182ce;
-        --primary-foreground: #1a202c;
-    }
-    #app {
-        background-color: var(--background);
-        color: var(--foreground);
-    }
-    .bg-card {
-        background-color: var(--card);
-        color: var(--card-foreground);
-    }
-    .text-primary {
-        color: var(--primary);
-    }
-    .text-primary-foreground {
-        color: var(--primary-foreground);
-    }
-    .bg-input {
-        background-color: var(--input);
-    }
-    .ring {
-        border-color: var(--ring);
-    }
-    .focus\:ring {
-        box-shadow: 0 0 0 3px var(--ring);
-    }
-    .hover\:bg-primary\/80:hover {
-        background-color: rgba(49, 130, 206, 0.8);
-    }
-    #loginBtn {
-        background-color: var(--primary);
-    }
-    #loginBtn:hover {
-        background-color: rgba(49, 130, 206, 0.8);
-    }
-</style>
- 
+  }
+  </script>
+  <style scoped>
+  /* Centrer le conteneur du formulaire de login */
+  .login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  /* Styliser le titre */
+  .login-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Styliser chaque groupe de formulaire */
+  .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  /* Styliser les labels */
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  /* Styliser les champs de saisie */
+  .form-group input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Placeholder styling */
+  .form-group input::placeholder {
+    color: #999;
+  }
+  
+  /* Styliser le bouton de soumission */
+  .submit-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  /* Ajouter un effet au bouton lors du survol */
+  .submit-button:hover {
+    background-color: #0056b3;
+  }
+  </style>
+  

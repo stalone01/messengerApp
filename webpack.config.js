@@ -12,8 +12,8 @@ Encore
     // only needed for CDN's or subdirectory deploy
     //.setManifestKeyPrefix('build/')
 
-    .addEntry('app', './assets/app.js')
-    // .addEntry('app', './assets/app.js')
+    .addEntry('chat', './assets/app.js')
+    .addEntry('login', './assets/login.js')
     // .addEntry('app', './assets/app.js')
     // .addEntry('app', './assets/app.js')
     .enableVueLoader()

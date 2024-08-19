@@ -17,17 +17,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ChatController extends AbstractController
 {
-    #[Route('/user', name: 'app_user')]
-    #[IsGranted('ROLE_USER')]
-    public function index(UserRepository $repo): Response
-    {
-        $users = $repo->findAll();
-
-        return $this->render('chat/index.html.twig', [
-            'users' => $users,
-        ]);
-    }
-
     #[Route('/chat', name: 'send_chat', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
     public function sendMessage(Request $request, EntityManagerInterface $entityManager, Message $message)
@@ -41,6 +30,19 @@ class ChatController extends AbstractController
 
         return $this->redirectToRoute('app_chat');
     }
+
+    #[Route('/user', name: 'app_user')]
+    #[IsGranted('ROLE_USER')]
+    public function index(UserRepository $repo): Response
+    {
+        $users = $repo->findAll();
+
+        return $this->render('chat/index.html.twig', [
+            'users' => $users,
+        ]);
+    }
+
+
 
     #[Route('/chat/messages', name: 'app_chat', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
