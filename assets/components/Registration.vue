@@ -6,28 +6,27 @@
       <form @submit.prevent="register" class="registration-form">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" v-model="form.username" placeholder="Enter your username" required />
+                <input type="text" id="username" v-model="form.username" placeholder="Entrer votre username" required />
             </div>
                 <div class="form-group">
                 <label for="password-first">Password</label>
-                <input type="password" id="password-first" v-model="form.passwordFirst" placeholder="Enter your password" required />
+                <input type="password" id="password-first" v-model="form.passwordFirst" placeholder="Entrer votre password" required />
             </div>
             <div class="form-group">
                 <label for="password-second">Confirm Password</label>
-                <input type="password" id="password-second" v-model="form.passwordSecond" placeholder="Confirm your password" required />
+                <input type="password" id="password-second" v-model="form.passwordSecond" placeholder="Confirmer votre password" required />
             </div>
-            <button type="submit" class="submit-button">Sign Up</button>
+            <button type="submit" class="submit-button">S'inscrire</button>
       </form>
     </div>
 </template>
   
 <script>
-// import Navbar from './partiels/Navbar.vue';
+  import axios from 'axios';
+
   export default {
     name:'Registration',
-    // components:{
-    //     Navbar,
-    // },
+   
     data() {
       return {
         form: {
@@ -39,29 +38,31 @@
     },
     methods: {
       async register() {
-        // Simple validation for passwords
+        // validation de passwords
         if (this.form.passwordFirst !== this.form.passwordSecond) {
           alert('Passwords do not match!');
           return;
         }
   
         try {
-          const response = await fetch('/api/register', {
-            method: 'POST',
+          const response = await axios.post('/register',{
+            username: this.form.username,
+            passwordFirst: this.form.passwordFirst
+          },{
             headers: {
               'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(this.form)
-          });
+            }
+        });
   
-          if (response.ok) {
+          if (response.status === 201) {
             alert('Registration successful!');
-            this.$router.push('/login');
+            // this.$router.push('/login');
           } else {
             alert('Registration failed!');
           }
         } catch (error) {
           console.error('Error:', error);
+          alert("Username already exists");
         }
       }
     }
