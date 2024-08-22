@@ -20,5 +20,17 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Security\LoginSuccessHandler:
+        tags: ['monolog.logger']
+
+    App\Security\LoginFailureHandler:
+        tags: ['monolog.logger']
+
+    App\Security\UserProvider:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: 'security.user_provider' }
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

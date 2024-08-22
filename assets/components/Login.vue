@@ -24,45 +24,43 @@
       </div>
       <button type="submit" class="submit-button">Se connecter</button>
     </form>
+    <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
   </div>
 </template>
   
-  <script>
-  export default {
-    data() {
-      return {
-        username: '',
-        password: ''
-      }
-    },
-    methods: {
-      async login() {
-        // Envoyer une requête POST à Symfony pour authentifier l'utilisateur
-        try {
-          const response = await fetch('/api/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              username: this.username,
-              password: this.password
-            })
-          });
-          
-          if (response.ok) {
-            this.$router.push('/chat');
-          } else {
-            alert('Login failed!');
-          }
-        } catch (error) {
-          console.error('Error:', error);
-        }
+<script>
+import axios from 'axios';
+
+export default{
+  data() {
+    return {
+      username:'',
+      password:'',
+      errorMessage:''
+    };
+  },
+  methods:{
+    async login(){
+      try{
+        const response = await axios.post('https://127.0.0.1:8000/login-users',{
+          username: this.username,
+          password: this.password
+        });
+        //Enregistrer le twt token
+        localStorage.setItem('token',response.data.token);
+
+        //redirection
+        // this.$router.push('/dashboard');
+        this.errorMessage = "connexion reussi..."
+      }catch(error){
+        this.errorMessage = 'Utilisateur introuvable! Inscrivez vous et ressayez plus tard!!!';
       }
     }
   }
-  </script>
-  <style scoped>
+}
+
+</script>
+<style scoped>
   /* Centrer le conteneur du formulaire de login */
   .login-container {
     max-width: 400px;
@@ -124,5 +122,5 @@
   .submit-button:hover {
     background-color: #0056b3;
   }
-  </style>
+</style>
   

@@ -23,6 +23,11 @@ security:
       logout:
         path: /logout
         target: /
+    api:
+      pattern: ^/api/
+      stateless: true
+      jwt: ~
+      
 
       # activate different ways to authenticate
       # https://symfony.com/doc/current/security.html#the-firewall
@@ -37,6 +42,8 @@ security:
     # - { path: ^/profile, roles: ROLE_USER }
     # - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     # - { path: ^/registration, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    # - { path: ^/api, roles: ROLE_USER }
     - { path: ^/chat, roles: ROLE_USER }
 
 when@test:
