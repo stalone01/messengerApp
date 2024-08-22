@@ -51,7 +51,7 @@ export default{
 
         //redirection
         // this.$router.push('/dashboard');
-        this.errorMessage = "connexion reussi..."
+        // this.errorMessage = "connexion reussi..."
       }catch(error){
         this.errorMessage = 'Utilisateur introuvable! Inscrivez vous et ressayez plus tard!!!';
       }
