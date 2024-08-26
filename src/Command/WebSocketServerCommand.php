@@ -7,13 +7,17 @@ use Ratchet\Server\IoServer;
 use Ratchet\WebSocket\WsServer;
 use React\EventLoop\Factory as LoopFactory;
 use React\Socket\Server as ReactServer;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'app:websocket-server',
+    description:'Starts the Websocket server. '
+)]
 class WebSocketServerCommand extends Command
 {
-    protected static $defaultName = 'app:websocket-server';
 
     protected function configure() {
         $this->setDescription('Starts the WebSocket server');

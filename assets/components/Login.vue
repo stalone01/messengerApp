@@ -42,18 +42,18 @@ export default{
   methods:{
     async login(){
       try{
-        const response = await axios.post('https://127.0.0.1:8000/login-users',{
+        const response = await axios.post('/login-users',{
           username: this.username,
           password: this.password
         });
         //Enregistrer le twt token
-        localStorage.setItem('token',response.data.token);
+        localStorage.setItem('token', response.data.token);
 
-        //redirection
-        // this.$router.push('/dashboard');
-        // this.errorMessage = "connexion reussi..."
+        this.$router.push('/dasboard');
       }catch(error){
-        this.errorMessage = 'Utilisateur introuvable! Inscrivez vous et ressayez plus tard!!!';
+        //this.errorMessage = 'Utilisateur introuvable! Inscrivez vous et ressayez plus tard!!!';
+        this.errorMessage = error.response?.data?.message || 'Une erreur s\'est produite, veuillez réessayer.';
+        console.log(error);
       }
     }
   }
