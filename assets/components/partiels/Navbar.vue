@@ -1,6 +1,8 @@
 <template>
     <div class="topnav" id="myTopnav">
         <a href="#conversarion" class="active">Conversation</a>
+        <a href="#users-active">Listes des utilisateurs</a>
+        <a href="#profile">Mon profile</a>
         <a href="#registration">S'inscrire</a>
         <a href="#connexion">Se Connecter</a>
         <a href="#deconnexion">Se deconnecter</a>
@@ -10,10 +12,14 @@
     </div>
 </template>
 <script>
-    name:'Navbar',
-    data()
-    methods: {
-        function myFunction() {
+ export default{
+  name:'Navbar',
+  data(){
+      //
+    },
+  methods: 
+  {
+    async myFunction() {
             var x = document.getElementById("myTopnav");
             if (x.className === "topnav") {
                 x.className += " responsive";
@@ -21,7 +27,8 @@
                 x.className = "topnav";
             }
         }
-    }
+  }
+}
 </script>
 <style scoped>
 /* Add a black background color to the top navigation */

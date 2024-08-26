@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registration{% endblock %}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('dashboard') }}
+{% endblock %}
+{% block body %}
+    <div id="app"></div>
+    {% block javascript %}
+        {{ encore_entry_script_tags('dashboard') }}
+    {% endblock %}
+{% endblock %}
