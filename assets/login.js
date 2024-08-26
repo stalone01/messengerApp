@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { createApp } from 'vue';
 import Login from './components/Login.vue';
+import router from './router/index.js';
 
 axios.interceptors.request.use((config) => {
     const token = localStorage.getItem('token');
@@ -14,4 +15,4 @@ axios.interceptors.request.use((config) => {
     return config;
   });
 
-createApp(Login).mount('#app');
+createApp(Login).use(router).mount('#app');
